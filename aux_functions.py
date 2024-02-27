@@ -17,3 +17,15 @@ def intersection_v1(STACK_SIZE = 4):
     env.unwrapped.configure(config)
 
     return env
+
+def render_model(model, env):
+    obs, info = env.reset()
+
+    while True:
+        env.render()
+        action, _states = model.predict(obs, deterministic=True)
+        obs, reward, terminated, truncated, info = env.step(action)
+        if terminated or truncated:
+            break
+
+    env.close()
